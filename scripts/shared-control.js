@@ -248,8 +248,20 @@ function wrapTokenMethodsEarly() {
     return false;
   };
 
+  // Wrap Token._onUpdate to block automatic camera panning
+  const originalOnUpdate = TokenClass.prototype._onUpdate;
+  if (originalOnUpdate) {
+    TokenClass.prototype._onUpdate = function(changed, options, userId) {
+      if (game.settings.get('shared-control', 'enabled') && game.settings.get('shared-control', 'disableTokenPanning')) {
+        options.pan = false;
+      }
+      return originalOnUpdate.call(this, changed, options, userId);
+    };
+  }
+
   debugLog('Token methods wrapped early (before canvas creation)');
 }
+
 
 // Setup on Foundry ready
 Hooks.once('ready', async () => {

@@ -98,7 +98,9 @@ export class MovementStateMachine {
     }
 
     // Control the token
-    token.control({ releaseOthers: true });
+    const disablePan = game.settings.get('shared-control', 'disableTokenPanning');
+    token.control({ releaseOthers: true, pan: !disablePan });
+
 
     // Lock the token using document flag (syncs automatically to all clients)
     await token.document.setFlag('shared-control', 'lockedBy', {

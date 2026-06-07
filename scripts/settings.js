@@ -92,6 +92,17 @@ export function registerSettings() {
     requiresReload: true
   });
 
+  // World setting: Disable camera panning on token movement
+  game.settings.register('shared-control', 'disableTokenPanning', {
+    name: game.i18n.localize('shared-control.settings.disableTokenPanning.name'),
+    hint: game.i18n.localize('shared-control.settings.disableTokenPanning.hint'),
+    scope: 'world',
+    config: true,
+    type: Boolean,
+    default: true
+  });
+
+
   // World setting: Soft lock state (blocks canvas but allows UI)
   game.settings.register('shared-control', 'softLocked', {
     name: 'Soft Locked',

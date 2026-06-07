@@ -1030,9 +1030,14 @@ export class RulerPreview {
         }
       }
 
+      const disablePan = game.settings.get('shared-control', 'disableTokenPanning');
+      const speaker = disablePan
+        ? { alias: token.name }
+        : ChatMessage.getSpeaker({ token: token.document });
+
       ChatMessage.create({
         content: chatMessage,
-        speaker: ChatMessage.getSpeaker({ token: token.document }),
+        speaker: speaker,
         style: CONST.CHAT_MESSAGE_STYLES.EMOTE
       });
 
